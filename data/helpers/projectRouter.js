@@ -35,4 +35,25 @@ router.get('/:id', validateProjectId, (req, res) => {
     })
 });
 
+//***SUB ROUTES***
+  // GET request to retrieve actions for a specific project
+  router.get('/:id/actions', validateProjectId, (req, res) => {
+    const id = req.params.id;
+
+    Projects.getProjectActions(id)
+    .then(actions => {
+        if (actions.length === 0) {
+            res.status(400).json({ errorMessage: 'No actions found.' });
+        } else {
+            res.status(200).json(actions);
+        }
+    })
+    .catch(err => {
+        console.log('Actions could not be retrieved.', err);
+        res
+        .status(500)
+        .json({ error: 'No actions found.' });
+    })
+})
+
 module.exports = router;
