@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import ProjectList from "./Projects/ProjectList";
+import Project from "./Projects/Project";
 
-function App() {
+
+const App = () => {
+  const [savedList, setSavedList] = useState([]);
+
+  const addToSavedList = project => {
+    setSavedList([...savedList, project]);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <SavedList list={savedList} />
+      <Route exact path="/" component={ProjectList} />
+      <Route
+        path="/projects/:id"
+        render={props => {
+          return <Project {...props} addToSavedList={addToSavedList} />;
+        }}
+      />
+      {/* <Route exact path="/update-movie/:id" component={UpdateForm} /> */}
+    </>
   );
-}
+};
 
 export default App;
