@@ -3,7 +3,11 @@ const express = require('express');
 const Projects = require('./projectModel');
 const Actions = require('./actionModel');
 
-const { validateProjectId, validateProject } = require('../../validators/validators');
+const { 
+        validateProjectId, 
+        validateProject, 
+        validateAction } 
+    = require('../../validators/validators');
 
 const router = express.Router();
 
@@ -66,6 +70,20 @@ router.post('/', validateProject, (req, res) => {
         .status(500)
         .json({ error: 'No actions found.' });
     })
-})
+});
+
+// creates a POST requst to add new action to project with specified ID
+router.post('/:id/actions', validateProjectId, validateAction, (req, res) => {
+    const actionData = { ...req.body, project_id: req.params.id };
+
+    Actions.insert(actionData) 
+    .then(action => {
+        res.status(201).json(action);
+    })
+    .catch(err => {
+        console.log('Error adding new action.', err);
+        res.status(500).json({ message: 'Error adding new action for project.' });
+    })
+});
 
 module.exports = router;
