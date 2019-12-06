@@ -3,7 +3,7 @@ const express = require('express');
 const Projects = require('./projectModel');
 const Actions = require('./actionModel');
 
-const { validateProjectId } = require('../../validators/validators');
+const { validateProjectId, validateProject } = require('../../validators/validators');
 
 const router = express.Router();
 
@@ -32,6 +32,18 @@ router.get('/:id', validateProjectId, (req, res) => {
             .status(200)
             .json(project);
         }
+    })
+});
+
+// POST request to create a new project
+router.post('/', validateProject, (req, res) => {
+    Projects.insert(req.body)
+    .then(project => {
+        res.status(201).json(project);
+    })
+    .catch(err => {
+        console.log('Error adding new project.', err);
+        res.status(500).json({ error: 'Error adding new project.' });
     })
 });
 
