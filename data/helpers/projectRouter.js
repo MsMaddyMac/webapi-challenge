@@ -75,17 +75,20 @@ router.put('/:id', validateProjectId, (req, res) => {
     const updates = req.body;
     const id = req.params.id;
 
-    Projects.update(id, updates)
+    Projects.get(id)
     .then(() => {
-        if(!updates.name) {
-            res.status(400).json({ errorMessage: 'Please provide project name.' });
+        if (!updates) {
+            res.status(400).json({ errorMessage: 'Changed your mind? There is no update.' })
         } else {
-            res.status(200).json({ project: `Project ${id} was updated!` });
+            Projects.update(id, updates)
+            .then(updatedProject => {
+                res.status(200).json({ message: `Successfully updated!`, updatedProject });
+            })
         }
     })
     .catch(err => {
         console.log('error updating project.', err);
-        res.status(500).json({ error: 'The project could not be found.' })
+        res.status(500).json({ error: 'The project could not be updated.' })
     })
 });
 
