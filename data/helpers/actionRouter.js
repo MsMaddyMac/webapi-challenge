@@ -55,4 +55,32 @@ router.delete('/:id', validateActionId, (req, res) => {
     });
 });
 
+// PUT request to update action by specified id
+router.put('/:id', validateActionId, (req, res) => {
+    const updateInfo = req.body;
+    const id = req.params.id;
+
+    Actions.get(id)
+    .then(() => {
+        if (Object.keys(updateInfo).length === 0) {
+            res
+            .status(400)
+            .json({ errorMessage: 'Changed your mind? There is nothing to update.' })
+        } else {
+            Actions.update(id, updateInfo)
+            .then(updatedAction => {
+                res
+                .status(200)
+                .json({ message: 'Successfully update!', updatedAction });
+            })
+        }
+    })
+    .catch(err => {
+        console.log('error updating action.', err);
+        res
+        .status(500)
+        .json({ error: 'The action could not be updated.' })
+    });
+});
+
 module.exports = router;
