@@ -18,6 +18,7 @@ router.get('/', (req, res) => {
     });
 });
 
+// GET request to retrieve action by specified ID
 router.get('/:id', validateActionId, (req, res) => {
     const id = req.params.id;
 
@@ -29,6 +30,29 @@ router.get('/:id', validateActionId, (req, res) => {
         console.log('The action could not be retrieved.', err);
         res.status(500).json({ error: 'The action could not be retrieved.' })
     })
+});
+
+// deletes action by specified ID
+router.delete('/:id', validateActionId, (req, res) => {
+    const id = req.params.id;
+
+    Actions.get(id)
+    .then(deletedAction => {
+        if (deletedAction) {
+            Actions.remove(id, deletedAction)
+            .then(() => {
+                res
+                .status(200)
+                .json({ message: 'The action is history!', deletedAction });
+            })
+        }
+    })
+    .catch(err => {
+        console.log('Error deleting action.');
+        res
+        .status(500)
+        .json({ error: 'Error deleting action.' })
+    });
 });
 
 module.exports = router;
