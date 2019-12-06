@@ -5,6 +5,8 @@ const helmet = require('helmet');
 const actionRouter = require('../data/helpers/actionRouter');
 const projectRouter = require('../data/helpers/projectRouter');
 
+const Projects = require('./projectModel');
+
 const server = express();
 
 server.get('/', (req, res) => {
