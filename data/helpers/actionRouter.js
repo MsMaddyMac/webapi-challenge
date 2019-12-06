@@ -18,4 +18,17 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/:id', validateActionId, (req, res) => {
+    const id = req.params.id;
+
+    Actions.get(id)
+    .then(action => {
+        res.status(200).json(action);
+    })
+    .catch(err => {
+        console.log('The action could not be retrieved.', err);
+        res.status(500).json({ error: 'The action could not be retrieved.' })
+    })
+});
+
 module.exports = router;
