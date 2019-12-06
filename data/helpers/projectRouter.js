@@ -76,8 +76,8 @@ router.put('/:id', validateProjectId, (req, res) => {
     const id = req.params.id;
 
     Projects.get(id)
-    .then(() => {
-        if (!updates) {
+    .then(update => {
+        if (Object.keys(updates).length === 0) {
             res.status(400).json({ errorMessage: 'Changed your mind? There is no update.' })
         } else {
             Projects.update(id, updates)
