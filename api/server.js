@@ -7,6 +7,10 @@ const projectRouter = require('../data/helpers/projectRouter');
 
 const server = express();
 
+server.get('/', (req, res) => {
+    res.send("<h2>And so it begins...<h2>");
+});
+
 //custom middleware
 function logger(req, res, next) {
     console.log(`[${new Date().toISOString()}] ${req.method} to ${req.originalUrl}`)
