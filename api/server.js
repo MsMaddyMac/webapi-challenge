@@ -8,7 +8,24 @@ const projectRouter = require('../data/helpers/projectRouter');
 const server = express();
 
 server.get('/', (req, res) => {
-    const message = process.env.MSG || 'Hello!'; 
+    const message = process.env.MSG || 'Hello!';
+
+    Projects.get()
+    .then(projects => {
+        res
+        .status(200)
+        .json({ message: message, projects });
+    })
+    .catch(err => {
+        console.log('Could not retrieve projects.', err);
+        res
+        .status(500)
+        .json({ message: 'Projects could not be retrieved.' });
+    });
+});
+
+server.get('/', (req, res) => {
+     
 
     res.send("<h2>And so it begins...<h2>", message );
 });
