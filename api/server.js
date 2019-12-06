@@ -8,7 +8,9 @@ const projectRouter = require('../data/helpers/projectRouter');
 const server = express();
 
 server.get('/', (req, res) => {
-    res.send("<h2>And so it begins...<h2>");
+    const message = process.env.MSG || 'Hello!'; 
+
+    res.send("<h2>And so it begins...<h2>", message );
 });
 
 //custom middleware
