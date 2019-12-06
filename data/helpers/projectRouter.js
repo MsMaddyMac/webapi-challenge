@@ -51,6 +51,21 @@ router.post('/', validateProject, (req, res) => {
     })
 });
 
+// DELETE request to delete project by specified ID
+router.delete('/:id', validateProjectId, (req, res) => {
+    const id = req.params.id;
+
+    Projects.remove(id)
+    .then(() => {
+        res.status(200).json({ message: 'The project is history!' });
+        }
+    )
+    .catch(err => {
+        console.log('Error deleting project.', err);
+        res.status(500).json({ error: 'Could not nuke project!' });
+    })
+});
+
 //***SUB ROUTES***
   // GET request to retrieve actions for a specific project
   router.get('/:id/actions', validateProjectId, (req, res) => {
