@@ -1,10 +1,12 @@
 // custom validator middleware
 const Projects = require('../data/helpers/projectModel');
+const Actions = require('../data/helpers/actionModel');
 
 module.exports = {
     validateProjectId,
     validateProject,
-    validateAction
+    validateAction,
+    validateActionId
 }
 
 //to be used on every GET request that expects a project id parameter.
@@ -54,5 +56,22 @@ function validateAction(req, res, next) {
     } else {
         next();
     }
+};
+
+// validates the provided action ID
+function validateActionId(req, res, next) {
+    const id = req.params.id;
+
+    Actions.get(id)
+    .then(action => {
+        if (action) {
+            req.action = action;
+        } else {
+            res
+            .status(400)
+            .json({ message: 'invalid action ID.' })
+        }
+    })
+    next();
 };
   
