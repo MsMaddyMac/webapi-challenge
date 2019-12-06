@@ -1,5 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');   
+const cors = require('cors');
 
 //imports routers
 const actionRouter = require('../data/helpers/actionRouter');
@@ -41,6 +42,7 @@ function logger(req, res, next) {
 
 server.use(helmet());
 server.use(express.json());
+server.use(cors());
 server.use(logger);
 
 server.use('/api/projects', projectRouter);
