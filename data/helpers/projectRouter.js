@@ -43,11 +43,15 @@ router.get('/:id', validateProjectId, (req, res) => {
 router.post('/', validateProject, (req, res) => {
     Projects.insert(req.body)
     .then(project => {
-        res.status(201).json(project);
+        res
+        .status(201)
+        .json(project);
     })
     .catch(err => {
         console.log('Error adding new project.', err);
-        res.status(500).json({ error: 'Error adding new project.' });
+        res
+        .status(500)
+        .json({ error: 'Error adding new project.' });
     })
 });
 
@@ -60,11 +64,15 @@ router.delete('/:id', validateProjectId, (req, res) => {
         if (deletedProject) {
         Projects.remove(id, deletedProject)
         .then(() => {
-        res.status(200).json({ message: 'The project is history!', deletedProject });
+            res
+            .status(200)
+            .json({ message: 'The project is history!', deletedProject });
         })
         .catch(err => {
             console.log('Error deleting project.', err);
-            res.status(500).json({ error: 'Could not nuke project!' });
+            res
+            .status(500)
+            .json({ error: 'Could not nuke project!' });
         })
     } 
     }) 
@@ -78,17 +86,23 @@ router.put('/:id', validateProjectId, (req, res) => {
     Projects.get(id)
     .then(update => {
         if (Object.keys(updates).length === 0) {
-            res.status(400).json({ errorMessage: 'Changed your mind? There is no update.' })
+            res
+            .status(400)
+            .json({ errorMessage: 'Changed your mind? There is no update.' })
         } else {
             Projects.update(id, updates)
             .then(updatedProject => {
-                res.status(200).json({ message: `Successfully updated!`, updatedProject });
+                res
+                .status(200)
+                .json({ message: `Successfully updated!`, updatedProject });
             })
         }
     })
     .catch(err => {
         console.log('error updating project.', err);
-        res.status(500).json({ error: 'The project could not be updated.' })
+        res
+        .status(500)
+        .json({ error: 'The project could not be updated.' })
     })
 });
 
@@ -100,9 +114,13 @@ router.put('/:id', validateProjectId, (req, res) => {
     Projects.getProjectActions(id)
     .then(actions => {
         if (actions.length === 0) {
-            res.status(400).json({ errorMessage: 'No actions found.' });
+            res
+            .status(400)
+            .json({ errorMessage: 'No actions found.' });
         } else {
-            res.status(200).json(actions);
+            res
+            .status(200)
+            .json(actions);
         }
     })
     .catch(err => {
@@ -119,11 +137,15 @@ router.post('/:id/actions', validateProjectId, validateAction, (req, res) => {
 
     Actions.insert(actionData) 
     .then(action => {
-        res.status(201).json(action);
+        res
+        .status(201)
+        .json(action);
     })
     .catch(err => {
         console.log('Error adding new action.', err);
-        res.status(500).json({ message: 'Error adding new action for project.' });
+        res
+        .status(500)
+        .json({ message: 'Error adding new action for project.' });
     })
 });
 

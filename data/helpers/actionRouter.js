@@ -10,11 +10,15 @@ const router = express.Router();
 router.get('/', (req, res) => {
     Actions.get()
     .then(actions => {
-        res.status(200).json(actions);
+        res
+        .status(200)
+        .json(actions);
     })
     .catch(err => {
         console.log('Could not retrieve actions.', err);
-        res.status(500).json({ message: 'Actions could not be retrieved.' });
+        res
+        .status(500)
+        .json({ message: 'Actions could not be retrieved.' });
     });
 });
 
@@ -24,11 +28,15 @@ router.get('/:id', validateActionId, (req, res) => {
 
     Actions.get(id)
     .then(action => {
-        res.status(200).json(action);
+        res
+        .status(200)
+        .json(action);
     })
     .catch(err => {
         console.log('The action could not be retrieved.', err);
-        res.status(500).json({ error: 'The action could not be retrieved.' })
+        res
+        .status(500)
+        .json({ error: 'The action could not be retrieved.' })
     })
 });
 
