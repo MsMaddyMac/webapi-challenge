@@ -55,14 +55,37 @@ router.post('/', validateProject, (req, res) => {
 router.delete('/:id', validateProjectId, (req, res) => {
     const id = req.params.id;
 
-    Projects.remove(id)
+    Projects.get(id)
+    .then(deletedProject => {
+        if (deletedProject) {
+        Projects.remove(id, deletedProject)
+        .then(() => {
+        res.status(200).json({ message: 'The project is history!', deletedProject });
+        })
+        .catch(err => {
+            console.log('Error deleting project.', err);
+            res.status(500).json({ error: 'Could not nuke project!' });
+        })
+    } 
+    }) 
+});
+
+// PUT request to update project by specified ID
+router.put('/:id', validateProjectId, (req, res) => {
+    const updates = req.body;
+    const id = req.params.id;
+
+    Projects.update(id, updates)
     .then(() => {
-        res.status(200).json({ message: 'The project is history!' });
+        if(!updates.name) {
+            res.status(400).json({ errorMessage: 'Please provide project name.' });
+        } else {
+            res.status(200).json({ project: `Project ${id} was updated!` });
         }
-    )
+    })
     .catch(err => {
-        console.log('Error deleting project.', err);
-        res.status(500).json({ error: 'Could not nuke project!' });
+        console.log('error updating project.', err);
+        res.status(500).json({ error: 'The project could not be found.' })
     })
 });
 

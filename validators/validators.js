@@ -14,13 +14,12 @@ function validateProjectId(req, res, next) {
     Projects.get(id)
       .then(project => {
         if (project) {
-          req.project = project;
+            req.project = project;
         } else {
-          res
-            .status(400)
-            .json({ message: 'invalid project ID.' });
+            res.status(400)
+            .json({ message: 'invalid project ID.' })
         }
-      })
+    })
     next();
   };
 
