@@ -130,7 +130,7 @@ router.put('/:id', validateProjectId, (req, res) => {
 });
 
 // creates a POST requst to add new action to project with specified ID
-router.post('/:id/actions', validateProjectId, validateAction, (req, res) => {
+router.post('/:id', validateProjectId, validateAction, (req, res) => {
     const newAction = req.body;
     const project_id = req.params.id;
 
