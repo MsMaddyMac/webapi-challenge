@@ -1,38 +1,42 @@
-import React, { Component } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import ProjectCard from "./ProjectCard";
 
-export default class ProjectList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      projects: []
-    };
-  }
+import axios from 'axios';
 
-  componentDidMount() {
-    axios
-      .get("https://mmapisprint.herokuapp.com/api/projects")
-      .then(res => this.setState({ projects: res.data }))
-      .catch(err => console.log(err.response));
-  }
-
-  render() {
-    return (
-      <div className="project-list">
-        {this.state.projects.map(project => (
-          <ProjectDetails key={project.id} movie={project} />
-        ))}
-      </div>
-    );
-  }
+const ProjectList = () => {
+  const [projects, setProjects] = useState([])
+  useEffect(() => {
+    const getProjects = () => {
+      axios
+        .get('https://mmapisprint.herokuapp.com/api/projects')
+        .then(response => {
+          setProjects(response.data);
+        })
+        .catch(error => {
+          console.error('Server Error', error);
+        });
+    }
+    
+    getProjects();
+  }, []);
+  
+  return (
+    <div className="project-list">
+      {projects.map(project => (
+        <ProjectDetails key={project.id} project={project} />
+      ))}
+    </div>
+  );
 }
 
 function ProjectDetails({ project }) {
+  
   return (
     <Link to={`/projects/${project.id}`}>
-      <ProjectCard movie={project} />
+      <ProjectCard project={project}/>
     </Link>
   );
 }
+
+export default ProjectList;

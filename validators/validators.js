@@ -16,13 +16,14 @@ function validateProjectId(req, res, next) {
     Projects.get(id)
       .then(project => {
         if (project) {
-            req.project = project;
+            next();
+            // req.project = project;
         } else {
             res.status(400)
             .json({ message: 'invalid project ID.' })
         }
     })
-    next();
+    
   };
 
   // validates the body on a POST request to create a new project
@@ -42,10 +43,10 @@ function validateProject(req, res, next) {
 
 // validates the body on a POST request to create a new action for a project with specified ID
 function validateAction(req, res, next) {
-    const actionData = { ...req.body, project_id: req.params.id };
-    const { description, notes } = actionData;
+    
+    const { description, notes } = req.body;
 
-    if (Object.keys(actionData).length ===0) {
+    if (Object.keys({description, notes}).length ===0) {
         res.status(400).json({ message: 'missing action info.' });
     }
     if (description > 128) {

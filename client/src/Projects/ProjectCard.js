@@ -8,13 +8,13 @@ const ProjectCard = props => {
       <div className="project-description">
         Description: <em>{description}</em>
       </div>
-      <div className="movie-metascore">
+      <div className="project-completed">
         Completed: <strong>{completed}</strong>
       </div>
       <h3>Actions</h3>
 
       {actions.map(action => (
-        <div key={action.id} className="project-action">
+        <div key={action} className="project-action">
           {action}
         </div>
       ))}

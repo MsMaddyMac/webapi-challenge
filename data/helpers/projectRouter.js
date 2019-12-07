@@ -31,11 +31,9 @@ router.get('/', (req, res) => {
 router.get('/:id', validateProjectId, (req, res) => {
     Projects.get(req.params.id)
     .then(project => {
-        if(project) {
-            res
-            .status(200)
-            .json(project);
-        }
+        res
+        .status(200)
+        .json(project);
     })
 });
 
@@ -133,9 +131,8 @@ router.put('/:id', validateProjectId, (req, res) => {
 
 // creates a POST requst to add new action to project with specified ID
 router.post('/:id/actions', validateProjectId, validateAction, (req, res) => {
-    const actionData = { ...req.body, project_id: req.params.id };
-
-    Actions.insert(actionData) 
+    
+    Actions.insert(req.body) 
     .then(action => {
         res
         .status(201)
