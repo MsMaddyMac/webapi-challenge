@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 
-const ProjectList = () => {
+const ProjectList = ({ title }) => {
   const [projects, setProjects] = useState([])
 
   useEffect(() => {
@@ -39,13 +39,12 @@ const ProjectList = () => {
   );
 }
 
-// function ProjectDetails({ project }) {
-  
-//   return (
-//     <Link to={`/projects/${project.id}`}>
-//       <ProjectCard project={project}/>
-//     </Link>
-//   );
-// }
+const styles = {
+  container: {
+    backgroundColor: "#ccc",
+    borderRadius: 3,
+    width: 300
+  }
+};
 
 export default ProjectList;
