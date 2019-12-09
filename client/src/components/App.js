@@ -11,6 +11,7 @@ const App = () => {
   return (
     <div>
       <h2>Beginning of Project Board!</h2>
+      <ProjectList title="test"/>
       {/* <Route exact path="/" component={ProjectList} /> */}
       {/* <Route path="/projects/:id" 
         render={(props)=> 

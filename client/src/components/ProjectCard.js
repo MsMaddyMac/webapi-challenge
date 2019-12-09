@@ -1,25 +1,14 @@
-// import React from 'react';
+import React from 'react';
+import { Card, Typography } from '@material-ui/core';
 
-// const ProjectCard = props => {
-//   const { name, description, completed, actions } = props.project;
-//   return (
-//     <div className="project-card">
-//       <h2>{name}</h2>
-//       <div className="project-description">
-//         Description: <em>{description}</em>
-//       </div>
-//       <div className="project-completed">
-//         Completed: <strong>{completed}</strong>
-//       </div>
-//       <h3>Actions</h3>
+const ProjectCard = () => {
+  return (
+      <Card>
+          <Typography>
+          Action Card
+          </Typography>
+      </Card>
+  );
+};
 
-//       {actions.map(action => (
-//         <div key={action} className="project-action">
-//           {action}
-//         </div>
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default ProjectCard;
+export default ProjectCard;
