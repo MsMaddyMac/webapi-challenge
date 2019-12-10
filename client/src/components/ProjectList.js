@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ProjectCard from "./ProjectCard";
+import ActionCard from "./ActionCard";
 
 // import axios from 'axios';
 
@@ -26,7 +26,7 @@ const ProjectList = ({ title }) => {
   return (
     <div style={styles.container}>
       <h4>{title}</h4>
-      <ProjectCard />
+      <ActionCard />
       {/* {projects.map(project => (
         <div key={project.id}>
           <h1>{project.name}</h1>

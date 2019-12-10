@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Typography } from '@material-ui/core';
 
-const ProjectCard = () => {
+const ActionCard = () => {
   return (
       <Card>
           <Typography>
@@ -11,4 +11,4 @@ const ProjectCard = () => {
   );
 };
 
-export default ProjectCard;
+export default ActionCard;
