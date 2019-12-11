@@ -3,8 +3,9 @@ import ActionCard from "./ActionCard";
 import SampleImage from '../img/sample.jpg';
 
 // material-ui imports
-import { makeStyles, GridList, GridListTile, GridListTileBar, ListSubheader, IconButton } from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
+import { makeStyles, GridList, GridListTile, GridListTileBar, ListSubheader, IconButton, Icon } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
@@ -17,6 +18,9 @@ const useStyles = makeStyles(theme => ({
   },
   listSubheader: {
     backgroundColor: 'teal'
+  },
+  deleteIcon: {
+    color: 'black'
   },
   gridList: {
     width: 500,
@@ -52,7 +56,10 @@ const ProjectList = ({ title }) => {
     <div className={classes.root}>
       <GridList cellHeight={180} className={classes.gridList}>
         <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-          <ListSubheader className={classes.listSubheader} component="div">{title}</ListSubheader>
+          <ListSubheader className={classes.listSubheader} component="div">
+            {title}
+            <IconButton aria-label={`delete`} className={classes.deleteIcon}><DeleteIcon /></IconButton>
+          </ListSubheader>
         </GridListTile>
         {projects.map(project => (
           <GridListTile key={project.id}>
@@ -62,7 +69,7 @@ const ProjectList = ({ title }) => {
               subtitle={<span>description: {project.description}</span>}
               actionIcon={
                 <IconButton aria-label={`info about ${project.title}`} className={classes.icon}>
-                  <InfoIcon />
+                  <AddIcon />
                 </IconButton>
               }
             />
@@ -71,29 +78,7 @@ const ProjectList = ({ title }) => {
       </GridList>
     </div>
   );
-  //   <div style={styles.container}>
-  //     <h4>{title}</h4>
-  //     <ActionCard />
-  //     {/* {projects.map(project => (
-  //       <div key={project.id}>
-  //         <h1>{project.name}</h1>
-  //       </div>
-  //       <Link to={`/projects/${project.id}`}>
-  //         <ProjectCard key={project.id} project={project}/>
-  //      </Link>
-  //       <ProjectDetails key={project.id} project={project} />
-  //     ))} */}
-  //   </div> 
-  // );
 }
 
-// const styles = {
-//   container: {
-//     backgroundColor: "#ccc",
-//     borderRadius: 3,
-//     width: 300,
-//     padding: 8
-//   }
-// };
 
 export default ProjectList;
