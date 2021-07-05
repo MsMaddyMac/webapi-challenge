@@ -1,0 +1,78 @@
+// custom validator middleware
+const Projects = require('../data/helpers/projectModel');
+const Actions = require('../data/helpers/actionModel');
+
+module.exports = {
+    validateProjectId,
+    validateProject,
+    validateAction,
+    validateActionId
+}
+
+//to be used on every GET request that expects a project id parameter.
+function validateProjectId(req, res, next) {
+    const id = req.params.id;
+    
+    Projects.get(id)
+      .then(project => {
+        if (project) {
+            next();
+            // req.project = project;
+        } else {
+            res.status(400)
+            .json({ message: 'invalid project ID.' })
+        }
+    })
+    
+  };
+
+  // validates the body on a POST request to create a new project
+function validateProject(req, res, next) {
+    const projectData = req.body;
+    const { name, description } = projectData;
+
+    if (Object.keys(projectData).length === 0) {
+        res.status(400).json({ message: 'Project data is required.' });
+    }
+    if (!name || !description) {
+        res.status(400).json({ message: 'Missing required name and/or description field.' });
+    } else {
+        next();
+    }
+};
+
+// validates the body on a POST request to create a new action for a project with specified ID
+function validateAction(req, res, next) {
+    
+    const { description, notes } = req.body;
+
+    if (Object.keys({description, notes}).length ===0) {
+        res.status(400).json({ message: 'missing action info.' });
+    }
+    if (description > 128) {
+        res.status(400).json({ message: "Description can't be longer than 128 characters." })
+    }
+    if (!description || !notes) {
+        res.status(400).json({ message: 'Missing required description and/or notes field.' })
+    } else {
+        next();
+    }
+};
+
+// validates the provided action ID
+function validateActionId(req, res, next) {
+    const id = req.params.id;
+
+    Actions.get(id)
+    .then(action => {
+        if (action) {
+            req.action = action;
+        } else {
+            res
+            .status(400)
+            .json({ message: 'invalid action ID.' })
+        }
+    })
+    next();
+};
+  
